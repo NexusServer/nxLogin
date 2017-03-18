@@ -31,15 +31,16 @@ public class ExampleCommand extends Command {
 
 	@Override
 	public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-
 		Player player = Server.getInstance().getPlayer(args[0].toLowerCase());
+		
+		StringBuilder msg = new StringBuilder("");
 
-		String msg = "";
-		for (int i = 1; i < args.length; i++) {
-			msg += args[i] + " ";
+		for (int i = 1; i != args.length; ++i) {
+			msg.append(new StringBuilder(args[i]).append(" "));
 		}
 
-		player.sendMessage(msg);
+		player.sendMessage(msg.toString());
+		msg = null;
 		return true;
 	}
 

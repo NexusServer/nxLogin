@@ -6,34 +6,29 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import cn.nukkit.Server;
-import cn.nukkit.metadata.MetadataStore;
-import cn.nukkit.metadata.MetadataValue;
 import cn.nukkit.utils.Config;
-import cn.nukkit.utils.ConfigSection;
 import nxlogin.Main;
 
 public class UserData {
-	private static UserData instance = null;
+	private static UserData instance;
 	public static Map<String, Object> password = new HashMap<>();
 	public static Map<String, Object> address = new HashMap<>();
-	private static Main plugin = null;
 
 	public UserData(Main plugin) {
 		plugin.getDataFolder().mkdirs();
 		Config password = new Config(new File(plugin.getDataFolder(), "password.json"), Config.JSON);
 		Config address = new Config(new File(plugin.getDataFolder(), "address.json"), Config.JSON);
 
-		UserData.password =password.getAll();
+		UserData.password = password.getAll();
 		UserData.address = address.getAll();
-		UserData.plugin = plugin;
 		instance = this;
 	}
 
-//	public LinkedHashMap<String, Object> configSet(Config config) {
-//		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-//		map = (LinkedHashMap<String, Object>) config.getAll();
-//		return map;
-//	}
+	/*public LinkedHashMap<String, Object> configSet(Config config) {
+		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+		map = (LinkedHashMap<String, Object>) config.getAll();
+		return map;
+	}*/
 
 	public void save() {
 		Config password = new Config(new File(Main.getInstance().getDataFolder(), "password.json"), Config.JSON);
@@ -48,7 +43,6 @@ public class UserData {
 		return instance;
 	}
 
-
 	public void register(String user, String password, String ip) {
 		UserData.address.put(user.toLowerCase(), ip);
 		UserData.password.put(user.toLowerCase(), password);
@@ -59,7 +53,7 @@ public class UserData {
 			Server.getInstance().getPlayer(user).namedTag.putBoolean("login", true);
 			return true;
 		}
-		if (UserData.password.get(user.toLowerCase()).equals(password.toLowerCase())) {
+		else if (UserData.password.get(user.toLowerCase()).equals(password.toLowerCase())) {
 			address.replace(user.toLowerCase(), ip);
 			return true;
 		}

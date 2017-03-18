@@ -1,25 +1,15 @@
 package nxlogin.commands;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.command.data.CommandData;
 import cn.nukkit.command.data.CommandParameter;
-import cn.nukkit.permission.Permission;
-import cn.nukkit.utils.TextFormat;
 import nxlogin.Main;
 import nxlogin.data.UserData;
 
 public class RegisterCommand extends Command {
-	Main plugin = null;
-
-	public RegisterCommand(Main plugin) {
+	public RegisterCommand() {
 		super("회원가입", "회원가입합니다", "/회원가입 비밀번호", new String[] { "register" });
-		this.plugin = plugin;
 		this.commandParameters.clear();
 		this.commandParameters.put("회원가입", new CommandParameter[] { new CommandParameter("설정 할 비밀번호") });
 
@@ -35,12 +25,12 @@ public class RegisterCommand extends Command {
 			return true;
 		}
 
-		if (!(args.length >= 1)) {
+		else if (!(args.length >= 1)) {
 			sender.sendMessage(Main.alert("정확하게 명령어를 입력하여주세요"));
 			return true;
 		}
 
-		if (args[0].length() < 4) {
+		else if (args[0].length() < 4) {
 			sender.sendMessage(Main.alert("비밀번호는 최소 4글자이상으로 작성하여주세요"));
 			return true;
 
