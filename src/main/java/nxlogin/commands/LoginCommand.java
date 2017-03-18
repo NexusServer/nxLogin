@@ -2,6 +2,8 @@ package nxlogin.commands;
 
 import java.util.HashMap;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParameter;
@@ -21,13 +23,16 @@ public class LoginCommand extends Command {
 				put("로그인", commands);
 			}
 		});
-		this.setPermission(Permission.DEFAULT_TRUE);
+		this.setPermission("");
+		this.commandData.permission = "";
 		this.plugin = plugin;
+		
 	}
 
 	@Override
 	public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-		if (!Main.unLogins.contains(sender.getName().toLowerCase())) {
+		
+		if (!Main.unLogins.contains((Player)sender)) {
 			sender.sendMessage(Main.alert("당신은 이미 로그인 되어있습니다"));
 			return true;
 		}
@@ -38,7 +43,7 @@ public class LoginCommand extends Command {
 		}
 
 		if (UserData.getInstance().login(sender.getName(), args[0], "")) {
-			Main.unLogins.remove(sender.getName().toLowerCase());
+			Main.unLogins.remove((Player)sender);
 			sender.sendMessage(Main.success("정상적으로 로그인 되셨습니다"));
 			return true;
 		}
