@@ -39,4 +39,9 @@ root_Key = key;
 private boolean isRootKey(String key){
 return root_Key.equals(key);
 }
+private void deregisterSuperUser(String key, String rootKey){}
+private void replaceSuperKey(String key,String rootKey){}
+
+public static void save(){}
+
 }
